@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>اختبارنا ❤️</title>
+
+  <style>
+    /* =========================
+       RESET
+    ========================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Tahoma, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, #ff8fab 0%, transparent 30%),
+        radial-gradient(circle at bottom left, #9b5de5 0%, transparent 30%),
+        linear-gradient(135deg, #12001f, #21002f, #100018);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* =========================
+       BACKGROUND HEARTS
+    ========================= */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      opacity: 0.25;
+      animation: floatHeart linear infinite;
+    }
+
+    .heart:nth-child(1) {
+      left: 10%;
+      animation-duration: 8s;
+      animation-delay: 1s;
+    }
+
+    .heart:nth-child(2) {
+      left: 25%;
+      animation-duration: 11s;
+      animation-delay: 3s;
+    }
+
+    .heart:nth-child(3) {
+      left: 45%;
+      animation-duration: 9s;
+      animation-delay: 0s;
+    }
+
+    .heart:nth-child(4) {
+      left: 65%;
+      animation-duration: 12s;
+      animation-delay: 2s;
+    }
+
+    .heart:nth-child(5) {
+      left: 82%;
+      animation-duration: 10s;
+      animation-delay: 4s;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+      }
+    }
+
+    /* =========================
+       APP
+    ========================= */
+    .app {
+      position: relative;
+      z-index: 2;
+      width: min(92%, 700px);
+      margin: auto;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 0;
+    }
+
+    .card {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 30px;
+      padding: 35px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+      animation: cardIn 0.7s ease;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* =========================
+       START SCREEN
+    ========================= */
+    .start-screen {
+      text-align: center;
+    }
+
+    .big-heart {
+      font-size: 75px;
+      animation: heartbeat 1.5s infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    .start-screen h1 {
+      font-size: clamp(30px, 7vw, 48px);
+      margin-bottom: 15px;
+    }
+
+    .start-screen h1 span {
+      color: #ff8fab;
+    }
+
+    .start-screen p {
+      color: #ddd;
+      line-height: 1.8;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .start-note {
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 25px;
+      color: #ffc4d6;
+      font-size: 14px;
+    }
+
+    /* =========================
+       BUTTON
+    ========================= */
+    .main-btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      padding: 15px 35px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff477e, #9b5de5);
+      box-shadow: 0 10px 30px rgba(255, 71, 126, 0.3);
+      transition: 0.3s;
+    }
+
+    .main-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(255, 71, 126, 0.45);
+    }
+
+    .main-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* =========================
+       QUIZ
+    ========================= */
+    .quiz-screen {
+      display: none;
+    }
+
+    .quiz-header {
+      margin-bottom: 30px;
+    }
+
+    .question-number {
+      color: #ff9fba;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .progress-container {
+      height: 8px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff477e, #c77dff);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+
+    .question {
+      font-size: clamp(22px, 5vw, 31px);
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .answer {
+      width: 100%;
+      text-align: right;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+      padding: 17px 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.25s;
+    }
+
+    .answer:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(-4px);
+      border-color: #ff8fab;
+    }
+
+    .answer.selected {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 71, 126, 0.35),
+        rgba(155, 93, 229, 0.35)
+      );
+      border-color: #ff8fab;
+      transform: translateX(-5px);
+    }
+
+    .answer.disabled {
+      pointer-events: none;
+    }
+
+    /* =========================
+       FEEDBACK
+    ========================= */
+    .feedback {
+      min-height: 30px;
+      margin-top: 20px;
+      text-align: center;
+      color: #ffc4d6;
+      font-size: 15px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: 0.3s;
+    }
+
+    .feedback.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       NEXT
+    ========================= */
+    .next-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 25px;
+    }
+
+    .next-btn {
+      border: none;
+      cursor: pointer;
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 15px;
+      transition: 0.3s;
+      display: none;
+    }
+
+    .next-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* =========================
+       RESULT
+    ========================= */
+    .result-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .result-emoji {
+      font-size: 75px;
+      margin-bottom: 15px;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    .result-screen h2 {
+      font-size: clamp(28px, 6vw, 40px);
+      margin-bottom: 15px;
+    }
+
+    .result-description {
+      color: #ddd;
+      line-height: 1.8;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    .score-box {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .score-box .score {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ff8fab;
+    }
+
+    .final-message {
+      color: #ffc4d6;
+      line-height: 1.9;
+      margin-bottom: 30px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 600px) {
+      .app {
+        width: 94%;
+        padding: 15px 0;
+      }
+
+      .card {
+        padding: 25px 18px;
+        border-radius: 24px;
+      }
+
+      .big-heart {
+        font-size: 60px;
+      }
+
+      .start-screen p {
+        font-size: 15px;
+      }
+
+      .question {
+        font-size: 23px;
+      }
+
+      .answer {
+        padding: 15px;
+        font-size: 15px;
+      }
+
+      .main-btn {
+        width: 100%;
+      }
+    }
+
+    /* =========================
+       QUESTION ANIMATION
+    ========================= */
+    .question-animation {
+      animation: questionIn 0.4s ease;
+    }
+
+    @keyframes questionIn {
+      from {
+        opacity: 0;
+        transform: translateX(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Floating Hearts -->
+  <div class="hearts">
+    <div class="heart">❤️</div>
+    <div class="heart">💗</div>
+    <div class="heart">💕</div>
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+  </div>
+
+  <main class="app">
+
+    <div class="card">
+
+      <!-- =========================
+           START SCREEN
+      ========================== -->
+      <section class="start-screen" id="startScreen">
+
+        <div class="big-heart">❤️</div>
+
+        <h1>
+          اختبار <span>بيننا</span>
+        </h1>
+
+        <p>
+          كام سؤال صغير كده...
+          <br>
+          وممنوع الغش عشان أنا هراجع الإجابات 👀😂
+        </p>
+
+        <div class="start-note">
+          مفيش إجابة صح أو غلط...
+          <br>
+          جاوبي على حسب إحساسك وبس ❤️
+        </div>
+
+        <button class="main-btn" id="startBtn">
+          يلا نبدأ 👀
+        </button>
+
+      </section>
+
+
+      <!-- =========================
+           QUIZ SCREEN
+      ========================== -->
+      <section class="quiz-screen" id="quizScreen">
+
+        <div class="quiz-header">
+
+          <div class="question-number" id="questionNumber">
+            السؤال 1 من 7
+          </div>
+
+          <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+
+        </div>
+
+        <div id="questionContent">
+
+          <h2 class="question" id="question">
+            السؤال هنا
+          </h2>
+
+          <div class="answers" id="answers">
+            <!-- Answers generated by JS -->
+          </div>
+
+          <div class="feedback" id="feedback"></div>
+
+          <div class="next-container">
+            <button class="next-btn" id="nextBtn">
+              السؤال اللي بعده ←
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           RESULT SCREEN
+      ========================== -->
+      <section class="result-screen" id="resultScreen">
+
+        <div class="result-emoji" id="resultEmoji">
+          ❤️
+        </div>
+
+        <h2 id="resultTitle">
+          النتيجة
+        </h2>
+
+        <p class="result-description" id="resultDescription">
+          النتيجة هنا
+        </p>
+
+        <div class="score-box">
+          <div>السكور بتاعك</div>
+          <div class="score">
+            <span id="score">0</span>%
+          </div>
+        </div>
+
+        <p class="final-message" id="finalMessage">
+          ❤️
+        </p>
+
+        <button class="main-btn" id="restartBtn">
+          نعيدها؟ 🔄
+        </button>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <script>
+    /* =====================================================
+       QUESTIONS
+       
+       تقدر تعدل الأسئلة والإجابات من هنا بسهولة.
+       
+       points:
+       من 1 إلى 4 حسب قوة الإجابة.
+       
+       feedback:
+       الرسالة اللي تظهر بعد اختيار الإجابة.
+    ===================================================== */
+
+    const questions = [
+
+      {
+        question: "لو أنا اختفيت يوم كامل عشان كنت مشغول... أول رد فعل منك هيكون إيه؟",
+
+        answers: [
+          {
+            text: "هسأل عليك وأطمن عليك ❤️",
+            points: 4,
+            feedback: "كده الكلام بدأ يبقى خطير 😂❤️"
+          },
+
+          {
+            text: "هستنى لما تفضى وأكلمك",
+            points: 3,
+            feedback: "عاقلة... بس أنا عارف إنك هتفتقديني 👀"
+          },
+
+          {
+            text: "هسيبك براحتك",
+            points: 2,
+            feedback: "براحتك؟! دي قاسية شوية 😂"
+          },
+
+          {
+            text: "هزعقلك أول ما تظهر 😂",
+            points: 4,
+            feedback: "آه كده رجعنا للشخصية الحقيقية 😂❤️"
+          }
+        ]
+      },
+
+
+      {
+        question: "لو قدامنا ساعة واحدة بس نقضيها سوا... تختاري نعمل إيه؟",
+
+        answers: [
+          {
+            text: "نتكلم ونحكي لبعض كل حاجة",
+            points: 4,
+            feedback: "دي أحلى إجابة بصراحة ❤️"
+          },
+
+          {
+            text: "نخرج ناكل حاجة",
+            points: 3,
+            feedback: "الأكل دايمًا حل محترم 😂"
+          },
+
+          {
+            text: "نتفرج على حاجة سوا",
+            points: 2,
+            feedback: "المهم إني موجود 😂"
+          },
+
+          {
+            text: "أي حاجة... المهم نقضيها سوا",
+            points: 4,
+            feedback: "الإجابة دي عليها بوسة افتراضية 😂❤️"
+          }
+        ]
+      },
+
+
+      {
+        question: "مين فينا غالبًا بيبدأ الصلح بعد الخناقة؟ 👀",
+
+        answers: [
+          {
+            text: "أنا 😌",
+            points: 4,
+            feedback: "طب ما أنا عارف 😂❤️"
+          },
+
+          {
+            text: "إنت 😂",
+            points: 4,
+            feedback: "اتهام رسمي وصلني 😂"
+          },
+
+          {
+            text: "الاتنين حسب مين غلطان",
+            points: 3,
+            feedback: "إجابة دبلوماسية جدًا 😂"
+          },
+
+          {
+            text: "محدش... بنستنى بعض 😂",
+            points: 1,
+            feedback: "ودي بقى أخطر إجابة 😂"
+          }
+        ]
+      },
+
+
+      {
+        question: "إيه أكتر حاجة بتفرق معاكي في علاقتنا؟",
+
+        answers: [
+          {
+            text: "إننا بنفهم بعض",
+            points: 4,
+            feedback: "وده أهم من أي حاجة ❤️"
+          },
+
+          {
+            text: "الضحك والهزار",
+            points: 3,
+            feedback: "واضح إننا اتجمعنا عشان نهزر 😂"
+          },
+
+          {
+            text: "الاهتمام",
+            points: 4,
+            feedback: "الاهتمام فعلًا بيفرق جدًا ❤️"
+          },
+
+          {
+            text: "إننا بنكون على طبيعتنا",
+            points: 4,
+            feedback: "دي إجابة جميلة جدًا ❤️"
+          }
+        ]
+      },
+
+
+      {
+        question: "بصراحة كده... لو سألتك: وحشتك؟ 👀",
+
+        answers: [
+          {
+            text: "آه جدًا ❤️",
+            points: 4,
+            feedback: "كنت مستني الإجابة دي 😂❤️"
+          },
+
+          {
+            text: "شوية كده 😏",
+            points: 3,
+            feedback: "شوية بس؟ طب ماشي 😂"
+          },
+
+          {
+            text: "مش هقول 😌",
+            points: 2,
+            feedback: "يعني وحشتك وبتتريقي عليا 😂"
+          },
+
+          {
+            text: "لا 😂",
+            points: 1,
+            feedback: "هعتبرها هزار عشان مش هصدق 😂"
+          }
+        ]
+      },
+
+
+      {
+        question: "لو حصل يوم وحسينا إن كلامنا قل عن الأول... إيه أحسن حل؟",
+
+        answers: [
+          {
+            text: "نتكلم بصراحة ونظبط الموضوع",
+            points: 4,
+            feedback: "بالظبط... الكلام بيحل حاجات كتير ❤️"
+          },
+
+          {
+            text: "نستنى الدنيا تهدى",
+            points: 2,
+            feedback: "ممكن... بس متسبوش المسافة تكبر."
+          },
+
+          {
+            text: "نعمل حاجة جديدة سوا",
+            points: 4,
+            feedback: "أهو ده الكلام 👀❤️"
+          },
+
+          {
+            text: "ولا حاجة، كل واحد ياخد مساحته",
+            points: 2,
+            feedback: "المساحة مهمة بس التواصل أهم ❤️"
+          }
+        ]
+      },
+
+
+      {
+        question: "وفي الآخر... إيه رأيك في صاحب الاختبار؟ 😂❤️",
+
+        answers: [
+          {
+            text: "يستاهل قعدة حلوة ❤️",
+            points: 4,
+            feedback: "تم اعتماد الإجابة رسميًا 😂❤️"
+          },
+
+          {
+            text: "بيستفزني بس بحبه 😂",
+            points: 4,
+            feedback: "دي أخطر إجابة 😂"
+          },
+
+          {
+            text: "محتاج يتحسن شوية 😌",
+            points: 3,
+            feedback: "وصلت الرسالة يا فندم 😂"
+          },
+
+          {
+            text: "هفكر وأقولك 😂",
+            points: 2,
+            feedback: "هستنى القرار الرسمي 😂"
+          }
+        ]
+      }
+
+    ];
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const resultScreen = document.getElementById("resultScreen");
+
+    const startBtn = document.getElementById("startBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    const questionNumber = document.getElementById("questionNumber");
+    const progressBar = document.getElementById("progressBar");
+
+    const question = document.getElementById("question");
+    const answersContainer = document.getElementById("answers");
+
+    const feedback = document.getElementById("feedback");
+    const nextBtn = document.getElementById("nextBtn");
+
+    const scoreElement = document.getElementById("score");
+    const resultEmoji = document.getElementById("resultEmoji");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultDescription = document.getElementById("resultDescription");
+    const finalMessage = document.getElementById("finalMessage");
+
+
+    /* =====================================================
+       VARIABLES
+    ===================================================== */
+
+    let currentQuestion = 0;
+    let totalPoints = 0;
+    let selectedAnswer = false;
+
+
+    /* =====================================================
+       START QUIZ
+    ===================================================== */
+
+    startBtn.addEventListener("click", () => {
+
+      currentQuestion = 0;
+      totalPoints = 0;
+
+      startScreen.style.display = "none";
+      resultScreen.style.display = "none";
+      quizScreen.style.display = "block";
+
+      showQuestion();
+
+    });
+
+
+    /* =====================================================
+       SHOW QUESTION
+    ===================================================== */
+
+    function showQuestion() {
+
+      selectedAnswer = false;
+
+      const current = questions[currentQuestion];
+
+      questionNumber.textContent =
+        `السؤال ${currentQuestion + 1} من ${questions.length}`;
+
+      const progress =
+        ((currentQuestion) / questions.length) * 100;
+
+      progressBar.style.width = `${progress}%`;
+
+      question.textContent = current.question;
+
+      answersContainer.innerHTML = "";
+
+      feedback.textContent = "";
+      feedback.classList.remove("show");
+
+      nextBtn.style.display = "none";
+
+      // Animation
+      document.getElementById("questionContent")
+        .classList.remove("question-animation");
+
+      void document.getElementById("questionContent").offsetWidth;
+
+      document.getElementById("questionContent")
+        .classList.add("question-animation");
+
+
+      current.answers.forEach((answer, index) => {
+
+        const button = document.createElement("button");
+
+        button.classList.add("answer");
+
+        button.textContent = answer.text;
+
+        button.addEventListener("click", () => {
+
+          if (selectedAnswer) return;
+
+          selectedAnswer = true;
+
+          totalPoints += answer.points;
+
+          // Select button
+          button.classList.add("selected");
+
+          // Disable all answers
+          const allAnswers =
+            document.querySelectorAll(".answer");
+
+          allAnswers.forEach(btn => {
+            btn.classList.add("disabled");
+          });
+
+          // Show feedback
+          feedback.textContent = answer.feedback;
+
+          feedback.classList.add("show");
+
+          // Show next button
+          nextBtn.style.display = "block";
+
+        });
+
+        answersContainer.appendChild(button);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       NEXT QUESTION
+    ===================================================== */
+
+    nextBtn.addEventListener("click", () => {
+
+      if (!selectedAnswer) return;
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+      } else {
+
+        showResult();
+
+      }
+
+    });
+
+
+    /* =====================================================
+       RESULT
+    ===================================================== */
+
+    function showResult() {
+
+      quizScreen.style.display = "none";
+      resultScreen.style.display = "block";
+
+      // Maximum possible score
+      const maxPoints = questions.length * 4;
+
+      const percentage =
+        Math.round((totalPoints / maxPoints) * 100);
+
+      scoreElement.textContent = percentage;
+
+
+      /*
+        Result categories
+      */
+
+      if (percentage >= 90) {
+
+        resultEmoji.textContent = "🥹❤️";
+
+        resultTitle.textContent =
+          "قلبك فضحك 😂❤️";
+
+        resultDescription.textContent =
+          "واضح إن الإجابات كلها كانت ماشية في اتجاه واحد...";
+
+        finalMessage.textContent =
+          "بصراحة النتيجة دي محتاجة قعدة حلوة عشان نحتفل بيها 😂❤️";
+
+      }
+
+      else if (percentage >= 75) {
+
+        resultEmoji.textContent = "😍";
+
+        resultTitle.textContent =
+          "إحنا تمام أوي ❤️";
+
+        resultDescription.textContent =
+          "واضح إن في بينا تفاهم حلو جدًا.";
+
+        finalMessage.textContent =
+          "بس برضه الاختبار ده مش كفاية... محتاجين نعمل حاجات أكتر سوا 😌❤️";
+
+      }
+
+      else if (percentage >= 55) {
+
+        resultEmoji.textContent = "👀";
+
+        resultTitle.textContent =
+          "فيه شوية حاجات محتاجة كلام 😂";
+
+        resultDescription.textContent =
+          "مش وحش خالص، بس واضح إن عندنا شوية أسئلة محتاجة إجابات على الحقيقة.";
+
+        finalMessage.textContent =
+          "وده أصلًا سبب الاختبار... نتكلم ونفهم بعض أكتر ❤️";
+
+      }
+
+      else {
+
+        resultEmoji.textContent = "😂";
+
+        resultTitle.textContent =
+          "إحنا محتاجين نراجع المنهج 😂";
+
+        resultDescription.textContent =
+          "واضح إنك حاولتي تلعبيها تقيلة في الإجابات.";
+
+        finalMessage.textContent =
+          "بس للأسف أنا لسه هطلب قعدة عشان أراجع معاكي الإجابات واحدة واحدة 😂❤️";
+
+      }
+
+      progressBar.style.width = "100%";
+
+    }
+
+
+    /* =====================================================
+       RESTART
+    ===================================================== */
+
+    restartBtn.addEventListener("click", () => {
+
+      currentQuestion = 0;
+      totalPoints = 0;
+
+      resultScreen.style.display = "none";
+      quizScreen.style.display = "block";
+
+      showQuestion();
+
+    });
+
+  </script>
+
+</body>
+</html>
